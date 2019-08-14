@@ -8,7 +8,6 @@ const router = (req, res) => {
     handleHome(req, res);
   }
   if (req.url.startsWith("/public")) {
-  console.log('this is req.url for public', req.url)
     handlePublic(req, res);
   }
 };
