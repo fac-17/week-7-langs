@@ -1,14 +1,13 @@
 const fs = require("fs");
 const path = require("path");
 const url = require("url");
-const { handleHome } = require("handler.js");
+const { handleHome, handlePublic } = require("handler.js");
 
 const router = (req, res) => {
-  const endpoint = req.url;
-
-  if (endpoint === "/") {
+  if (req.url === "/") {
     handleHome(req, res);
   }
-  if (endpoint.startsWith("/public")) {
+  if (req.url.startsWith("/public")) {
+    handlePublic(req, res);
   }
 };
