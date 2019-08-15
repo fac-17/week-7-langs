@@ -47,5 +47,16 @@ tape("Login route responds with 302 and redirects to about on successfult log-in
     t.equal(res.statusCode, 302, "status code should be 302");
     t.equal(res.headers["content-type"], "about/html", "about.html");
     t.end();
-  })
-})
+  });
+});
+
+tape("404 route should return 404", t=> {
+  supertest(router)
+  .get("/iDontExist")
+  .end((err, res) => {
+    t.error(err, "404 Route should return 404");
+    t.equal(res.statusCode, 404, "Status code should be 404");
+    t.equal(res.headers["content-type"], "text/html", '<p style="font-size: 10vh; text-align: center;">404, Sorry, this page doesn\'t exist!</p>');
+    t.end();
+  });
+});
