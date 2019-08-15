@@ -52,4 +52,4 @@ To run the project on the localhost:3000:
 * Code review - we've made an active effort to not just merge pull requests, but to inspect the changed code in each file that's changed, and question each other on the changes. This has meant that our code is more organised and there are less bugs. 
 
 ## What could have gone better 😔
-* While we all agreed to start from stratch and not build on the project we did last week like other groups have done, this has obviously slowed us down a bit because of time spent building file architecture, the server, deploying, setting up continuous integration and building a database. BUT on the plus side, we have consolidated these skills and have also made it into the authentication side of the project, too.
+* While we all agreed to start from stratch and not build on the project we did last week like other groups have done, this has obviously slowed us down a bit because of time spent building file architecture, the server, deploying, setting up continuous integration and building a database. BUT on the plus side, we have consolidated these skills and have also made it onto the authentication side of the project, too.
