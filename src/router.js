@@ -10,6 +10,13 @@ const router = (req, res) => {
     handlePublic(req, res);
   } else if(req.url.startsWith("/login")) {
     handleLogin(req, res);
+  } else {      
+    const notFound = '<p style="font-size: 10vh; text-align: center;">404, Sorry, this page doesn\'t exist!</p>';
+    res.writeHead(404, {
+     "Content-type": "text/html",
+     "Content-length": notFound.length
+    })
+    res.end(notFound);
   }
 };
 
