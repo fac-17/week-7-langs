@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const cookie = require("cookie");
 const bcrypt = require("bcryptjs");
 const querystring = require("querystring");
+const qs = require("qs");
 const { getData, getUsernames, getHashes } = require("../database/getData");
 
 const handleHome = (req, res) => {
@@ -45,20 +46,17 @@ const handlePublic = (req, res) => {
 };
 
 const handleRegister = (req, res) => {
-  //Receive info
+  console.log("gets into register handler");
   let allData = "";
-
   req.on("data", chunk => {
     allData += chunk;
   });
   req.on("end", () => {
-    const parsedData = JSON.parse(allData);
-    console.log("JSON DATA: ", parsedData);
-    console.log("Query string", querystring.parse(allData));
-
-    const username = parsedData.user;
-    const password = parsedData.password;
-
+    console.log("gets into req.onend");
+    console.log(qs.parse(allData));
+    const { username, password} = qs.parse(allData);
+    console.log(username, password);
+    //getUsername and compare
     //check username is not taken already
     getUsernames((error, response) => {
       if(error) {
@@ -66,34 +64,39 @@ const handleRegister = (req, res) => {
         res.end("<h1>Sorry, unable to get usernames</h1>");
         console.log(error);
       } else {
-        //go through array
-        if(username === user_name){
-          //send message Username already taken ERR
-        } else {
-          // encrypt password and resgiter user, send success message
-        let users = JSON.stringify(response);
-        console.log("DB users ", users);
-        res.writeHead(200, {"content-type": "application/json"});
-        res.end(users);
-        }
+        console.log(response);
+        // //go through array
+        // if(username === user_name){
+        //   //send message Username already taken ERR
+        // } else {
+        //   // encrypt password and resgiter user, send success message
+        // let users = JSON.stringify(response);
+        // console.log("DB users ", users);
+        // res.writeHead(200, {"content-type": "application/json"});
+        // res.end(users);
+        // }
       }
     });
+      res.writeHead(302, { Location: "/" });
+      res.end();
+    });
+  //   
 
-    //return success
+  //   //return success
 
-    //return message this username is already taken
+  //   //return message this username is already taken
 
-    // Only if registration is successful
+  //   // Only if registration is successful
 
-    res.writeHead(302, { Location: "/about" });
-    res.end();
-  });
+  //   res.writeHead(302, { Location: "/about" });
+  //   res.end();
+  // });
 
-  // Create JWT
+  // // Create JWT
 
-  //jwt.sign({ user:  /*USERNAME*/ }, process.env.SECRET);
+  // //jwt.sign({ user:  /*USERNAME*/ }, process.env.SECRET);
 
-  // encrypt pass
+  // // encrypt pass
 };
 
 module.exports = { handleHome, handlePublic, handleRegister };

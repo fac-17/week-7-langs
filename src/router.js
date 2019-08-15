@@ -8,7 +8,8 @@ const router = (req, res) => {
     handleHome(req, res);
   } else if (req.url.startsWith("/public")) {
     handlePublic(req, res);
-  } else if (req.url.startsWith("/register") && req.method === "POST") {
+  } else if (req.url.startsWith("/register")) {
+    console.log("i'm in router register");
     handleRegister(req, res);
   } else {
     const notFound =
