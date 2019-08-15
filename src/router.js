@@ -1,21 +1,22 @@
-const fs = require('fs');
-const path = require('path');
-const url = require('url');
-const { handleHome, handlePublic, handleRegister } = require('./handler.js');
+const fs = require("fs");
+const path = require("path");
+const url = require("url");
+const { handleHome, handlePublic, handleRegister } = require("./handler.js");
 
 const router = (req, res) => {
-  if (req.url === '/') {
+  if (req.url === "/") {
     handleHome(req, res);
-  } else if (req.url.startsWith('/public')) {
+  } else if (req.url.startsWith("/public")) {
     handlePublic(req, res);
-  } else if(req.url.startsWith("/register")) {
+  } else if (req.url.startsWith("/register") && req.method === "POST") {
     handleRegister(req, res);
-  } else {      
-    const notFound = '<p style="font-size: 10vh; text-align: center;">404, Sorry, this page doesn\'t exist!</p>';
+  } else {
+    const notFound =
+      '<p style="font-size: 10vh; text-align: center;">404, Sorry, this page doesn\'t exist!</p>';
     res.writeHead(404, {
-     "Content-type": "text/html",
-     "Content-length": notFound.length
-    })
+      "Content-type": "text/html",
+      "Content-length": notFound.length
+    });
     res.end(notFound);
   }
 };
