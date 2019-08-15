@@ -15,7 +15,26 @@ tape('home route should return 200 and index html', (t) => {
     .end((err, res) => {
       t.error(err, 'home route does not throw error');
       t.equal(res.statusCode, 200, 'Home should return 200 status code');
-      t.equal(res.headers['content-type'], 'text/html', 'stuffff');
+      t.equal(res.headers['content-type'], 'text/html', 'home route returns correct content type');
+      t.end();
+    });
+});
+
+tape('public route returns files with content type and status code', (t) => {
+  supertest(router)
+    .get('/public/style.css')
+    .end((err, res) => {
+      t.error(err, 'style.css route does not throw error');
+      t.equal(res.statusCode, 200, 'style.css should return 200 status code');
+      t.equal(res.headers['content-type'], 'text/css', 'style.css route returns correct content type');
+    });
+
+  supertest(router)
+    .get('/public/dom.js')
+    .end((err, res) => {
+      t.error(err, 'dom.js route does not throw error');
+      t.equal(res.statusCode, 200, 'dom.js should return 200 status code');
+      t.equal(res.headers['content-type'], 'application/javascript', 'dom.js route returns correct content type');
       t.end();
     });
 });
