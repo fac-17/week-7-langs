@@ -99,15 +99,16 @@ const handleLogin = (req, res) => {
         res.end("<h1>Sorry, unable to get usernames</h1>");
       } else {
         // Get all usernames from getUsernames
-        console.log("This is DB res: ", res);
         let dbUsernames = [];
         res.forEach(user => {
           dbUsernames.push(user.user_name);
-          console.log(dbUsernames);
         });
         //compare our username (from Login) to each
-
-        // If match -> check password
+        console.log({ username, password });
+        if (dbUsernames.includes(username)) {
+          console.log("Cool!");
+          // check password
+        }
 
         // if password match -> login
       }
