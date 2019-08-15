@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="public/style.css">
+  <link rel="stylesheet" href="style.css">
   <title>Week 7</title>
 </head>
 <body>
@@ -13,10 +13,12 @@
 <section class="register__form">
   <form class="form__body register__form__body" action="/register">
     <label for="new__user"></label>
-    <input class="form__input" type="text" id="new__user" required>
+    <input class="form__input" type="text" id="new__user">
     <label for="new__password"></label>
-    <input class="form__input" type="text" id="new__password" required>
-    <button id='register__submit' type=submit oname="Submit" value="Submit">register</button>
+    <input class="form__input" type="password" id="new__password">
+    <label for="retype__password"></label>
+    <input class="form__input" type="password" id="retype__password">
+    <button id='register__submit' type=submit oname="Submit" value="Submit">Register</button>
   </form>
 </section>
 
@@ -25,13 +27,13 @@
 <section class="login__form">
   <form class="form__body login__form__body" action"/login">
     <label for="login__name"></label>
-    <input class="form__input" type="text" id="login__name" required>
+    <input class="form__input" type="text" id="login__name">
     <label for="login__password"></label>
-    <input class="form__input" type="text" id="login__password" required>
-    <button id='login__submit' type=submit oname="Submit" value="Submit">login</button>
+    <input class="form__input" type="password" id="login__password">
+    <button id='login__submit' type=submit oname="Submit" value="Submit">Login</button>
   </form>
 </section>
 
-<script src="public/dom.js"></script>
+<script src="dom.js"></script>
 </body>
 </html>
