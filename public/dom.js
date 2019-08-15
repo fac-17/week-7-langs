@@ -27,14 +27,17 @@ registerForm.addEventListener("submit", e => {
     e.preventDefault();
     warning.textContent = "Please enter a username";
     registerForm.appendChild(warning);
-  } else if (passwordInput.value === "" || retypePasswordInput.value === "") {
+    usernameInput.classList.add("redBorder");
+  } else if (passwordInput.value === "") {
     e.preventDefault();
     warning.textContent = "Please enter a password";
     registerForm.appendChild(warning);
+    passwordInput.classList.add("redBorder");
   } else if (passwordInput.value !== retypePasswordInput.value) {
     e.preventDefault();
     warning.textContent = "Passwords do not match";
     registerForm.appendChild(warning);
+    retypePasswordInput.classList.add("redBorder");
   }
 });
 
