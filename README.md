@@ -1,5 +1,7 @@
 # Week 7 - LANGs
 
+[![Build Status](https://travis-ci.com/fac-17/week-7-langs.svg?branch=master)](https://travis-ci.com/fac-17/week-7-langs)
+
 ## Team
 Georgia 
 Gigi
