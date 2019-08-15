@@ -82,8 +82,12 @@ const handleRegister = (req, res) => {
               console.log(hashResponse);
               postData(username, hashResponse, (err, dbResponse) => {
                 if (err) {
-                  return err;
+                  res.writeHead(500, "Content-type: text/html");
+                  res.end("<h1 style='font-size: 5vh; text-align: center;'>Ooops! Something's gone wrong! :'(</h1>");
                 } else {
+                  // give them a cookie here?
+                  res.writeHead(302, "Content-type: text/html");
+                  res.end("<h1 style='font-size: 5vh; text-align: center;'>Hurray! You are signed up!</h1>");
                   console.log("success");
                 }
               });
