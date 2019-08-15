@@ -1,18 +1,3 @@
-// console.log('runnnig');
-
-// const registerName = document.querySelector('#new__user');
-// const registerPassword = document.querySelector('#new__password');
-
-// const registerUser = (e) => {
-//   e.preventDefault();
-//   console.log('name = ', registerName.value);
-//   console.log('password = ', registerPassword.value);
-// };
-
-// const registerSubmit = document.querySelector('#register__submit');
-
-// registerSubmit.addEventListener('click', registerUser);
-
 const registerForm = document.querySelector(".register__form__body");
 const usernameInput = document.querySelector("#new__user");
 const passwordInput = document.querySelector("#new__password");
@@ -22,7 +7,15 @@ const loginInput = document.querySelector("#login__name");
 const loginPasswordInput = document.querySelector("#login__password");
 const warning = document.createElement("p");
 
+const removeBorder = () => {
+  const inputs = Array.from(document.getElementsByClassName("redBorder"));
+  inputs.forEach(element => {
+    element.classList.remove("redBorder");
+  });
+};
+
 registerForm.addEventListener("submit", e => {
+  removeBorder();
   if (usernameInput.value === "") {
     e.preventDefault();
     warning.textContent = "Please enter a username";
@@ -42,15 +35,16 @@ registerForm.addEventListener("submit", e => {
 });
 
 loginForm.addEventListener("submit", e => {
+  removeBorder();
   if (loginInput.value === "") {
     e.preventDefault();
     warning.textContent = "Please enter a username";
     loginForm.appendChild(warning);
-  }
-
-  if (loginPasswordInput.value === "") {
+    loginInput.classList.add("redBorder");
+  } else if (loginPasswordInput.value === "") {
     e.preventDefault();
     warning.textContent = "Please enter a password";
     loginForm.appendChild(warning);
+    loginPasswordInput.classList.add("redBorder");
   }
 });
