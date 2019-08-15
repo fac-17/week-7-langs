@@ -54,49 +54,37 @@ const handleRegister = (req, res) => {
   req.on("end", () => {
     console.log("gets into req.onend");
     console.log(qs.parse(allData));
-    const { username, password} = qs.parse(allData);
+    const { username, password } = qs.parse(allData);
     console.log(username, password);
     //getUsername and compare
     //check username is not taken already
     getUsernames((error, response) => {
-      if(error) {
+      if (error) {
         res.writeHead(500, "Content-type: text/html");
         res.end("<h1>Sorry, unable to get usernames</h1>");
         console.log(error);
       } else {
-        console.log(response);
-        // //go through array
-        // if(username === user_name){
-        //   //send message Username already taken ERR
-        // } else {
-        //   // encrypt password and resgiter user, send success message
-        // let users = JSON.stringify(response);
-        // console.log("DB users ", users);
-        // res.writeHead(200, {"content-type": "application/json"});
-        // res.end(users);
-        // }
+        dbUsernames = [];
+        response.forEach(user => {
+          dbUsernames.push(user.user_name);
+        });
+        //if user exists, ask them to pick another username
+        if (dbUsernames.includes(username)) {
+          res.writeHead(500, "Content-type: text/html");
+          res.end("<h1 style='font-size: 5vh; text-align: center;'>Sorry, this username is already taken!<br> Please, go back and pick a differen username.</h1>");
+        }
+
+        console.log("dbUsernames", dbUsernames.includes(username));
+        // else {
+        // // encrypt password
+        // // postData - register user into database
+        // if user registration has error with database, print 500 server error
+        // else redirect to about page and welcome new user
       }
     });
-      res.writeHead(302, { Location: "/" });
-      res.end();
-    });
-  //   
-
-  //   //return success
-
-  //   //return message this username is already taken
-
-  //   // Only if registration is successful
-
-  //   res.writeHead(302, { Location: "/about" });
+  //   res.writeHead(302, { Location: "/" });
   //   res.end();
-  // });
-
-  // // Create JWT
-
-  // //jwt.sign({ user:  /*USERNAME*/ }, process.env.SECRET);
-
-  // // encrypt pass
+  });
 };
 
 module.exports = { handleHome, handlePublic, handleRegister };
