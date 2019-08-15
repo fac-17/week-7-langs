@@ -38,3 +38,14 @@ tape('public route returns files with content type and status code', (t) => {
       t.end();
     });
 });
+
+tape("Login route responds with 302 and redirects to about on successfult log-in", t=> {
+  supertest(router)
+  .get('/login')
+  .end((err, res) => {
+    t.error(err, 'login route redirects to about on successful log in');
+    t.equal(res.statusCode, 302, "status code should be 302");
+    t.equal(res.headers["content-type"], "about/html", "about.html");
+    t.end();
+  })
+})

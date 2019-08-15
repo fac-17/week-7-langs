@@ -36,4 +36,8 @@ const handlePublic = (req, res) => {
   });
 };
 
-module.exports = { handleHome, handlePublic };
+const handleLogin = (req, res) => {
+  
+}
+
+module.exports = { handleHome, handlePublic, handleLogin };
