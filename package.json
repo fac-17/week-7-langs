@@ -4,7 +4,7 @@
   "description": "Week 7 Group",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "tape ./src/tests/router.tests.js | tap-spec",
     "start": "node ./src/server.js",
     "dev": "nodemon ./src/server.js"
   },
@@ -22,6 +22,8 @@
   "devDependencies": {
     "dotenv": "^8.0.0",
     "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
     "nock": "^10.0.6",
     "nodemon": "^1.19.1",
     "supertest": "^4.0.2",
@@ -29,6 +31,7 @@
     "tape": "^4.11.0"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cookie": "^0.4.0",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
