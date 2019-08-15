@@ -18,6 +18,9 @@ const registerForm = document.querySelector('.register__form__body');
 const usernameInput = document.querySelector('#new__user');
 const passwordInput = document.querySelector('#new__password');
 const retypePasswordInput = document.querySelector('#retype__password');
+const loginForm = document.querySelector('.login__form__body');
+const loginInput = document.querySelector('#login__name');
+const loginPasswordInput = document.querySelector('#login__password');
 let warning = document.createElement('p');
 
 
@@ -35,9 +38,20 @@ else if (passwordInput.value === "" || retypePasswordInput.value === "") {
   registerForm.appendChild(warning);
 }
 
-// if (passwordInput.validity.valueMissing || )
+});
 
+loginForm.addEventListener('submit', e => {
 
+  if (loginInput.value === "") {
+    e.preventDefault();
+    warning.textContent = "Please enter a username";
+    loginForm.appendChild(warning);
+  }
 
+  if (loginPasswordInput.value === "") {
+    e.preventDefault();
+    warning.textContent = "Please enter a password";
+    loginForm.appendChild(warning);
+  }
 
 });
