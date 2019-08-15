@@ -4,7 +4,9 @@
   "description": "Week 7 Group",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/server.js",
+    "dev": "nodemon ./src/server.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
   },
   "dependencies": {
     "cookie": "^0.4.0",
+    "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
     "pg": "^7.12.1"
   }
