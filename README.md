@@ -16,6 +16,17 @@ Georgia, Gigi, Gregor, Sam, Sarah
 * Engage in pull requests/code review
 * Test your code as you go - TDD
 
+## Installation
+
+To start the project :
+
+`npm install`
+
+
+To run the project on the localhost:3000 :
+
+`npm start` in your shell
+
 ## To do list
 
 ### Wednesday AM
