@@ -1,7 +1,11 @@
 # Week 7 - LANGs
 
 ## Team
-Georgia, Gigi, Gregor, Sam, Sarah
+Georgia 
+Gigi
+Gregor
+Sarah
+and sometimes Sam
 
 ## Code of conduct
 * We need to hold Jack to talk when discussing
@@ -22,8 +26,7 @@ To start the project :
 
 `npm install`
 
-
-To run the project on the localhost:3000 :
+To run the project on the localhost:3000:
 
 `npm start` in your shell
 
