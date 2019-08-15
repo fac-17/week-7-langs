@@ -7,5 +7,19 @@ const getData = callback => {
   })
 }
 
+const getUsernames = callback => {
+  dbConnection.query(`SELECT user_name FROM users;`, (error, response) => {
+  if(error) return callback(error)
+  callback(null, response.rows)
+  })
+}
 
-module.exports = getData
+const getHashes = callback => {
+  dbConnection.query(`SELECT user_hash FROM users;`, (error, response) => {
+  if(error) return callback(error)
+  callback(null, response.rows)
+  })
+}
+
+
+module.exports = {getData, getUsernames, getHashes};
