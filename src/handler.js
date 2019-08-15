@@ -130,10 +130,38 @@ const handleLogin = (req, res) => {
           dbUsernames.push(user.user_name);
         });
         //compare our username (from Login) to each
-        console.log({ username, password });
         if (dbUsernames.includes(username)) {
           console.log("Cool!");
+          let index = dbUsernames.indexOf(username);
+          console.log("Obj:", Object.entries(dbUsernames[index]));
           // check password
+          getHashes((err, res) => {
+            if (err) {
+              res.writeHead(500, "Content-type: text/html");
+              res.end("<h1>Sorry, unable to get usernames</h1>");
+            } else {
+              let dbHashes = [];
+              res.forEach(user => {
+                dbHashes.push(user.user_hash);
+              });
+              console.log("Hashes: ", dbHashes);
+              console.log("Password,", password);
+
+              dbHashes.forEach(item => {
+                comparePasswords(password, item, (error, boo) => {
+                  if (error) {
+                    res.writeHead(500, "Content-type: text/html");
+                    res.end("<h1>Sorry, password wasn't retrieved</h1>");
+                  } else {
+                    console.log("Boo:", boo);
+                  }
+                });
+              });
+            }
+          });
+        } else {
+          res.writeHead(500, "Content-type: text/html");
+          res.end("<h1>Sorry, your username does not exist</h1>");
         }
 
         // if password match -> login
