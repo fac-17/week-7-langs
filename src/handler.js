@@ -9,6 +9,8 @@ const bcrypt = require("bcryptjs");
 const querystring = require("querystring");
 const qs = require("qs");
 const { getData, getUsernames, getHashes } = require("../database/getData");
+const postData = require("../database/postData");
+const { comparePasswords, hashPassword } = require("./authHelper");
 
 const handleHome = (req, res) => {
   const filePath = path.join(__dirname, "..", "public/index.html");
@@ -69,11 +71,35 @@ const handleRegister = (req, res) => {
         if (dbUsernames.includes(username)) {
           res.writeHead(500, "Content-type: text/html");
           res.end(
-            "<h1 style='font-size: 5vh; text-align: center;'>Sorry, this username is already taken!<br> Please, go back and pick a differen username.</h1>"
+            "<h1 style='font-size: 5vh; text-align: center;'>Sorry, this username is already taken!<br> Please, go back and pick a different username.</h1>"
           );
+        } else {
+          hashPassword(password, (err, hashResponse) => {
+            if (err) {
+              return err;
+            } else {
+              console.log(hashResponse);
+              postData(username, hashResponse, (err, dbResponse) => {
+                if (err) {
+                  res.writeHead(500, "Content-type: text/html");
+                  res.end(
+                    "<h1 style='font-size: 5vh; text-align: center;'>Ooops! Something's gone wrong! :'(</h1>"
+                  );
+                } else {
+                  // give them a cookie here?
+                  res.writeHead(302, "Content-type: text/html");
+                  res.end(
+                    "<h1 style='font-size: 5vh; text-align: center;'>Hurray! You are signed up!</h1>"
+                  );
+                  console.log("success");
+                }
+              });
+              return hashResponse;
+            }
+          });
         }
 
-        console.log("dbUsernames", dbUsernames.includes(username));
+        // console.log("dbUsernames", dbUsernames.includes(username));
         // else {
         // // encrypt password
         // // postData - register user into database
