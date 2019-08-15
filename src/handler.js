@@ -46,14 +46,11 @@ const handlePublic = (req, res) => {
 };
 
 const handleRegister = (req, res) => {
-  console.log("gets into register handler");
   let allData = "";
   req.on("data", chunk => {
     allData += chunk;
   });
   req.on("end", () => {
-    console.log("gets into req.onend");
-    console.log(qs.parse(allData));
     const { username, password } = qs.parse(allData);
     console.log(username, password);
     //getUsername and compare
@@ -64,14 +61,16 @@ const handleRegister = (req, res) => {
         res.end("<h1>Sorry, unable to get usernames</h1>");
         console.log(error);
       } else {
-        dbUsernames = [];
+        let dbUsernames = [];
         response.forEach(user => {
           dbUsernames.push(user.user_name);
         });
         //if user exists, ask them to pick another username
         if (dbUsernames.includes(username)) {
           res.writeHead(500, "Content-type: text/html");
-          res.end("<h1 style='font-size: 5vh; text-align: center;'>Sorry, this username is already taken!<br> Please, go back and pick a differen username.</h1>");
+          res.end(
+            "<h1 style='font-size: 5vh; text-align: center;'>Sorry, this username is already taken!<br> Please, go back and pick a differen username.</h1>"
+          );
         }
 
         console.log("dbUsernames", dbUsernames.includes(username));
@@ -82,9 +81,38 @@ const handleRegister = (req, res) => {
         // else redirect to about page and welcome new user
       }
     });
-  //   res.writeHead(302, { Location: "/" });
-  //   res.end();
+    //   res.writeHead(302, { Location: "/" });
+    //   res.end();
   });
 };
 
-module.exports = { handleHome, handlePublic, handleRegister };
+const handleLogin = (req, res) => {
+  let allData = "";
+  req.on("data", chunk => {
+    allData += chunk;
+  });
+  req.on("end", () => {
+    const { username, password } = qs.parse(allData);
+    getUsernames((err, res) => {
+      if (err) {
+        res.writeHead(500, "Content-type: text/html");
+        res.end("<h1>Sorry, unable to get usernames</h1>");
+      } else {
+        // Get all usernames from getUsernames
+        console.log("This is DB res: ", res);
+        let dbUsernames = [];
+        res.forEach(user => {
+          dbUsernames.push(user.user_name);
+          console.log(dbUsernames);
+        });
+        //compare our username (from Login) to each
+
+        // If match -> check password
+
+        // if password match -> login
+      }
+    });
+  });
+};
+
+module.exports = { handleHome, handlePublic, handleRegister, handleLogin };
