@@ -71,7 +71,7 @@ const handleRegister = (req, res) => {
         //if user exists, ask them to pick another username
         if (dbUsernames.includes(username)) {
           res.writeHead(500, "Content-type: text/html");
-          res.end("<h1 style='font-size: 5vh; text-align: center;'>Sorry, this username is already taken!<br> Please, go back and pick a differen username.</h1>");
+          res.end("<h1 style='font-size: 5vh; text-align: center;'>Sorry, this username is already taken!<br> Please, go back and pick a different username.</h1>");
         }
 
         console.log("dbUsernames", dbUsernames.includes(username));
