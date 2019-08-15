@@ -8,7 +8,7 @@ Sarah
 and sometimes Sam
 
 ## Code of conduct
-* We need to hold Jack to talk when discussing
+* We need to hold Jack to talk when discussing 🐱
 * Start fresh :)
 * Group learning : When something has to be explained/clarified, we all regroup to explain -> everyone understand roughly the whole project (global)
 * Let's agree just before pairing how we want to proceede
@@ -28,9 +28,9 @@ To start the project :
 
 To run the project on the localhost:3000:
 
-`npm start` in your shell
+`npm start` in your shell 🐚
 
-## Project goals
+## Project goals ⚽
 - [x] Login form with 2 fields - username and password
 - [ ] Users only have to log in once (i.e. implement a cookie-based session on login)
 - [ ] Username is visible on each page of the site after logging in
@@ -40,7 +40,7 @@ To run the project on the localhost:3000:
 - [ ] Include thorough tests on the back-end, testing pure functions and testing routes using Supertest. If you make external API calls, use Nock to mock the response for your tests.
 - [ ] Test front-end logic, we don't expect tests on the DOM.
 
-## Project stretch goals
+## Project stretch goals 🎯
 - [ ] Client-side and server-side validation on login form, including error handling that provides feedback to users
 - [ ] Add roles and permissions - Have an "admin" level user (role) who can edit and delete all content 😱 (permissions)
 - [ ] Add comment functionality to content
