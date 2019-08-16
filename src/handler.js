@@ -187,9 +187,10 @@ const handleAbout = (req, res) => {
   const filePath = path.join(__dirname, "..", "public/about.html");
   fs.readFile(filePath, (err, file) => {
     if (err) {
-      res.writeHead(404, { "Content-Type": "text/html" });
-      res.end("<h1> 404: Page Not Found </h1>");
+      res.writeHead(403, { "Content-Type": "text/html" });
+      res.end("<h1> 403: Forbidden, please register or login </h1>");
     } else {
+      // Check cookie not tampered with
       res.writeHead(200, { "Content-Type": "text/html" });
       res.end(file);
     }
