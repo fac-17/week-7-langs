@@ -1,21 +1,55 @@
-const cookie = require('cookie')
-const jwt = require('jsonwebtoken')
+"use strict";
 
- module.exports = (req, res) => {
-  const cookies = cookie.parse(req.headers.cookie || '')
-  console.log('im cookies: ', cookies)
-  const ourCookie = cookies.token
-  console.log('im ourcookie: ', ourCookie)
+const { parse } = require("cookie");
+const { sign, verify } = require("jsonwebtoken");
 
-  if(ourCookie){
-    try {
-      const verifedCookie = jwt.verify(ourCookie, process.env.SECRET)
-      if(verifedCookie.username) return verifedCookie
-    } catch (e) {
-        console.log('Cookie is not here')
-        res.writeHead(301, {Location: '/', 'Set-Cookie': 'token=false; Max-Age=0'})
-        res.end()
-        return e
+const SECRET = process.env.SECRET;
+
+const send401 = () => {
+  const message = "fail!";
+  res.writeHead(401, {
+    "Content-Type": "text/plain",
+    "Content-Length": message.length
+  });
+  return res.end(message);
+};
+
+const getCookie = (userDetails, SECRET) => {
+  const cookie = sign(userDetails, SECRET);
+  res.writeHead(302, {
+    Location: "/about",
+    "Set-Cookie": `loddedIn=${cookie}; HttpOnly`
+  });
+  return res.end();
+};
+
+const deleteCookieLogout = () => {
+  res.writeHead(302, {
+    Location: "/",
+    "Set-Cookie": "loggedIn=0; Max-Age=0"
+  });
+  return res.end();
+};
+
+const authCheck = () => {
+  if (!req.headers.cookie) return send401();
+
+  const { loggedIn } = parse(req.headers.cookie);
+
+  if (!loggedIn) return send401();
+
+  return verify(loggedIn, SECRET, (err, loggedIn) => {
+    if (err) {
+      return send401();
+    } else {
+      const message = `Your user id is: ${loggedIn.userId}`;
+      res.writeHead(200, {
+        "Content-Type": "text/plain",
+        "Content-Length": message.length
+      });
+      return res.end(message);
     }
-  } else return false
-}
+  });
+};
+
+module.exports = { getCookie, authCheck, deleteCookieLogout };
