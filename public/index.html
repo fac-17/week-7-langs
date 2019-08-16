@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="public/style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
     <title>Be happy</title>
   </head>
   <body>
     <h1>Welcome!</h1>
-
+<section class="both_forms">
     <section class="register__form">
+      <h2>Register for access to our cool giphys!</h2>
       <form
         class="form__body register__form__body"
         action="/register"
@@ -41,6 +43,7 @@
     <br />
 
     <section class="login__form">
+      <h2>Login to see your cool daily giphy!</h2>
       <form class="form__body login__form__body" action="/login" method="POST">
         <label for="login__name">Username:</label>
         <input
@@ -61,7 +64,7 @@
         </button>
       </form>
     </section>
-
+</section>
     <script src="public/dom.js"></script>
   </body>
 </html>
