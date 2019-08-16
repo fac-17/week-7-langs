@@ -119,50 +119,64 @@ const handleLogin = (req, res) => {
   });
   req.on("end", () => {
     const { username, password } = qs.parse(allData);
-    getUsernames((err, res) => {
-      if (err) {
+    getData(username, (error, response) => {
+      if (error) {
         res.writeHead(500, "Content-type: text/html");
         res.end("<h1>Ooops! Something's gone wrong!</h1>");
       } else {
-        // Get all usernames from getUsernames
-        let dbUsernames = [];
-        res.forEach(user => {
-          dbUsernames.push(user.user_name);
+        let hash = response[0].user_hash;
+        console.log(hash);
+        comparePasswords(password, hash, (compErr, compRes) => {
+          if (compErr) {
+            res.writeHead(500, "Content-type: text/html");
+            res.end("<h1>Ooops! Something's gone wrong!</h1>");
+          } else {
+            //const cookie = sign(userDetails, SECRET);
+            res.writeHead(302, {
+              Location: "/about"//,
+              //"Set-Cookie": `jwt=${cookie}; HttpOnly`
+            });
+            return res.end();
+          }
         });
+        // Get all usernames from getUsernames
+        // response.forEach(user => {
+        //   dbUsernames.push(user.user_name);
+        // });
         //compare our username (from Login) to each
-        if (dbUsernames.includes(username)) {
-          console.log("Cool!");
-          let index = dbUsernames.indexOf(username);
-          console.log("Obj:", Object.entries(dbUsernames[index]));
-          // check password
-          getHashes((err, res) => {
-            if (err) {
-              res.writeHead(500, "Content-type: text/html");
-              res.end("<h1>Ooops! Something's gone wrong!</h1>");
-            } else {
-              let dbHashes = [];
-              res.forEach(user => {
-                dbHashes.push(user.user_hash);
-              });
-              console.log("Hashes: ", dbHashes);
-              console.log("Password,", password);
+        // if (dbUsernames.includes(username)) {
+        //   console.log("Cool!");
+        //   let index = dbUsernames.indexOf(username);
+        //   console.log("Obj:", Object.entries(dbUsernames[index]));
+        // check password
+        // getHashes((err, res) => {
+        //   if (err) {
+        //     res.writeHead(500, "Content-type: text/html");
+        //     res.end("<h1>Ooops! Something's gone wrong!</h1>");
+        //   } else {
+        //     let dbHashes = [];
+        //     res.forEach(user => {
+        //       dbHashes.push(user.user_hash);
+        //     });
+        //     console.log("Hashes: ", dbHashes);
+        //     console.log("Password,", password);
 
-              dbHashes.forEach(item => {
-                comparePasswords(password, item, (error, boo) => {
-                  if (error) {
-                    res.writeHead(500, "Content-type: text/html");
-                    res.end("<h1>Sorry, password wasn't retrieved</h1>");
-                  } else {
-                    console.log("Boo:", boo);
-                  }
-                });
-              });
-            }
-          });
-        } else {
-          res.writeHead(500, "Content-type: text/html");
-          res.end("<h1>Sorry, your username does not exist</h1>");
-        }
+        //     dbHashes.forEach(item => {
+        //       comparePasswords(password, item, (error, boo) => {
+        //         if (error) {
+        //           res.writeHead(500, "Content-type: text/html");
+        //           res.end("<h1>Sorry, password wasn't retrieved</h1>");
+        //         } else {
+        //           console.log("Boo:", boo);
+        //         }
+        //       });
+        //     });
+        //   }
+        // });
+        // } else {
+        //   res.writeHead(500, "Content-type: text/html");
+        //   res.end("<h1>Sorry, your username does not exist</h1>");
+        // }
 
         // if password match -> login
       }

@@ -1,8 +1,9 @@
 const dbConnection = require("./db_connection");
 
-const getData = callback => {
+const getData = (username, callback) => {
   dbConnection.query(
-    `SELECT user_name, user_hash FROM users;`,
+    `SELECT user_hash FROM users WHERE user_name LIKE $1; `,
+    [username],
     (error, response) => {
       if (error) return callback(error);
       callback(null, response.rows);
