@@ -122,7 +122,7 @@ const handleLogin = (req, res) => {
     getUsernames((err, res) => {
       if (err) {
         res.writeHead(500, "Content-type: text/html");
-        res.end("<h1>Sorry, unable to get usernames</h1>");
+        res.end("<h1>Ooops! Something's gone wrong!</h1>");
       } else {
         // Get all usernames from getUsernames
         let dbUsernames = [];
@@ -138,7 +138,7 @@ const handleLogin = (req, res) => {
           getHashes((err, res) => {
             if (err) {
               res.writeHead(500, "Content-type: text/html");
-              res.end("<h1>Sorry, unable to get usernames</h1>");
+              res.end("<h1>Ooops! Something's gone wrong!</h1>");
             } else {
               let dbHashes = [];
               res.forEach(user => {
