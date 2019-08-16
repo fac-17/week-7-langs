@@ -17,13 +17,15 @@
         method="POST"
       >
         <label for="new__user">New User:</label>
-        <input class="form__input" type="text" id="new__user" name="username" />
+        <input class="form__input" type="text" id="new__user" name="username" min="3" max="10"/>
         <label for="new__password">Password:</label>
         <input
           class="form__input"
           type="password"
           id="new__password"
           name="password"
+          min="5"
+          max="10"
         />
         <label for="retype__password">Repeat Password:</label>
         <input class="form__input" type="password" id="retype__password" />
