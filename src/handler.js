@@ -125,7 +125,6 @@ const handleLogin = (req, res) => {
         res.end("<h1>Ooops! Something's gone wrong!</h1>");
       } else {
         let hash = response[0].user_hash;
-        console.log(hash);
         comparePasswords(password, hash, (compErr, compRes) => {
           if (compErr) {
             res.writeHead(500, "Content-type: text/html");
@@ -133,7 +132,7 @@ const handleLogin = (req, res) => {
           } else {
             //const cookie = sign(userDetails, SECRET);
             res.writeHead(302, {
-              Location: "/about"//,
+              Location: "/about" //,
               //"Set-Cookie": `jwt=${cookie}; HttpOnly`
             });
             return res.end();
@@ -184,4 +183,23 @@ const handleLogin = (req, res) => {
   });
 };
 
-module.exports = { handleHome, handlePublic, handleRegister, handleLogin };
+const handleAbout = (req, res) => {
+  const filePath = path.join(__dirname, "..", "public/about.html");
+  fs.readFile(filePath, (err, file) => {
+    if (err) {
+      res.writeHead(404, { "Content-Type": "text/html" });
+      res.end("<h1> 404: Page Not Found </h1>");
+    } else {
+      res.writeHead(200, { "Content-Type": "text/html" });
+      res.end(file);
+    }
+  });
+};
+
+module.exports = {
+  handleHome,
+  handlePublic,
+  handleRegister,
+  handleLogin,
+  handleAbout
+};

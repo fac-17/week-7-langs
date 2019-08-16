@@ -5,7 +5,8 @@ const {
   handleHome,
   handlePublic,
   handleRegister,
-  handleLogin
+  handleLogin,
+  handleAbout
 } = require("./handler.js");
 
 const router = (req, res) => {
@@ -17,6 +18,8 @@ const router = (req, res) => {
     handleRegister(req, res);
   } else if (req.url.startsWith("/login")) {
     handleLogin(req, res);
+  } else if (req.url.startsWith("/about")) {
+    handleAbout(req, res);
   } else {
     const notFound =
       '<p style="font-size: 10vh; text-align: center;">404, Sorry, this page doesn\'t exist!</p>';
