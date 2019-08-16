@@ -11,6 +11,11 @@ const qs = require("qs");
 const { getData, getUsernames, getHashes } = require("../database/getData");
 const postData = require("../database/postData");
 const { comparePasswords, hashPassword } = require("./authHelper");
+const { getCookie, authCheck, deleteCookieLogout } = require("./loggedIn");
+const { parse } = require("cookie");
+const { sign, verify } = require("jsonwebtoken");
+
+const SECRET = process.env.SECRET;
 
 const handleHome = (req, res) => {
   const filePath = path.join(__dirname, "..", "public/index.html");
@@ -86,12 +91,12 @@ const handleRegister = (req, res) => {
                     "<h1 style='font-size: 5vh; text-align: center;'>Ooops! Something's gone wrong! :'(</h1>"
                   );
                 } else {
-                  // give them a cookie here?
-                  res.writeHead(302, "Content-type: text/html");
-                  res.end(
-                    "<h1 style='font-size: 5vh; text-align: center;'>Hurray! You are signed up!</h1>"
-                  );
-                  console.log("success");
+                  const cookie = sign({ username }, SECRET);
+                  res.writeHead(302, {
+                    Location: "/about",
+                    "Set-Cookie": `loggedIn=${cookie}; HttpOnly`
+                  });
+                  return res.end();
                 }
               });
               return hashResponse;
@@ -130,54 +135,14 @@ const handleLogin = (req, res) => {
             res.writeHead(500, "Content-type: text/html");
             res.end("<h1>Ooops! Something's gone wrong!</h1>");
           } else {
-            //const cookie = sign(userDetails, SECRET);
+            const cookie = sign({ username }, SECRET);
             res.writeHead(302, {
-              Location: "/about" //,
-              //"Set-Cookie": `jwt=${cookie}; HttpOnly`
+              Location: "/about",
+              "Set-Cookie": `loggedIn=${cookie}; HttpOnly`
             });
             return res.end();
           }
         });
-        // Get all usernames from getUsernames
-        // response.forEach(user => {
-        //   dbUsernames.push(user.user_name);
-        // });
-        //compare our username (from Login) to each
-        // if (dbUsernames.includes(username)) {
-        //   console.log("Cool!");
-        //   let index = dbUsernames.indexOf(username);
-        //   console.log("Obj:", Object.entries(dbUsernames[index]));
-        // check password
-        // getHashes((err, res) => {
-        //   if (err) {
-        //     res.writeHead(500, "Content-type: text/html");
-        //     res.end("<h1>Ooops! Something's gone wrong!</h1>");
-        //   } else {
-        //     let dbHashes = [];
-        //     res.forEach(user => {
-        //       dbHashes.push(user.user_hash);
-        //     });
-        //     console.log("Hashes: ", dbHashes);
-        //     console.log("Password,", password);
-
-        //     dbHashes.forEach(item => {
-        //       comparePasswords(password, item, (error, boo) => {
-        //         if (error) {
-        //           res.writeHead(500, "Content-type: text/html");
-        //           res.end("<h1>Sorry, password wasn't retrieved</h1>");
-        //         } else {
-        //           console.log("Boo:", boo);
-        //         }
-        //       });
-        //     });
-        //   }
-        // });
-        // } else {
-        //   res.writeHead(500, "Content-type: text/html");
-        //   res.end("<h1>Sorry, your username does not exist</h1>");
-        // }
-
-        // if password match -> login
       }
     });
   });
