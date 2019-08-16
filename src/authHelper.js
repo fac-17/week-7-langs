@@ -12,7 +12,7 @@ const hashPassword = (password, cb) => {
           cb(err);
         } else {
           cb(null, hash);
-          console.log(hash);
+          console.log(hash)
         }
       });
       console.log(password);
